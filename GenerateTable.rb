@@ -12,8 +12,9 @@ class GenerateTable
 
 
     def get_Table()
-        S_data = ""
+        s_data = ""
+        c_data = s_data.split("")
 
-
+        puts("#{c_data}")
     end
 end
