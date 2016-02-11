@@ -1,5 +1,12 @@
 class GenerateTable
-    def initialize()
 
+
+
+    def initialize()
     end
+
+    def loadTable(array)
+        @masterArray = array
+    end
+    
 end
