@@ -8,5 +8,9 @@ class GenerateTable
     def loadTable(array)
         @masterArray = array
     end
-    
+
+
+    def get_Table()
+        S_data = ""
+    end
 end
