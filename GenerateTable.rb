@@ -1,16 +1,12 @@
-class GenerateTable
+load 'Compare.rb'
 
+class GenerateTalbe
 
+    #genereting elements
+    compare = Compare.new()
+    tempArray = Array.new()
+    
+    tempArray = compare.allChars()
+    
 
-    def initialize()
-    end
-
-    def loadTable(array)
-        @masterArray = array
-    end
-
-
-    def get_Table()
-        S_data = ""
-    end
 end
