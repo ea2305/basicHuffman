@@ -12,11 +12,6 @@ class GenerateTable
 
     def get_Table(value, elements)
         arr_data = values.clone #recivimos el arreglo de elementos y copiamos
-
-        for x in elements
-
-        end
-
     end
 end
 
