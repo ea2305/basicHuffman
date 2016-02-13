@@ -3,14 +3,10 @@
 class SortChars
     
     def shortElements(elements)#ordena tabla de elementos
-        
-        puts("Elementos array : #{elements.length}")
         size = elements.length
         
         for i in 0..(size - 1)
-        
             for j in 0..(size - 2)
-            
                 if (elements[j][1] > elements[(j + 1)][1])
                 
                     temp = elements[j + 1]#asignacion de
@@ -20,6 +16,12 @@ class SortChars
             end    
         end
         return elements
+    end
+
+    def printArray(array)
+        for i in 0..array.length - 1
+            puts ("#{array[i]}")
+        end
     end
 
 end

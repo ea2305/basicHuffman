@@ -1,4 +1,5 @@
-#Generete class for get all letters in string 
+#Generador de elementos existentes, 
+#Obtiene todos los caracteres existentes dentro del array 
 
 class Compare
 
@@ -7,10 +8,8 @@ class Compare
         myChar = validator.split("")
     
         while myChar.length != 0 do
-            current = myChar[0]#Cargamos el elemento a remover
-            
+            current = myChar[0]#Cargamos el elemento a remover            
             myChar -= [current]#quitamos todos los elementos del array
-            
             myArray.push(current)
         end
         return myArray

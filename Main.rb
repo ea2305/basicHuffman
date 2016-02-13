@@ -17,5 +17,5 @@ ordTable = sort.shortElements(table)
 puts("Otros nuevos ele : #{elements}")
 puts("Nuevos elementos : #{table}")
 
-puts("Tabla ordenada : #{ordTable}")
+sort.printArray(ordTable)
 
