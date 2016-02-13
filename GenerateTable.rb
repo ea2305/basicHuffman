@@ -1,4 +1,4 @@
-load 'Compare.rb'
+load './struct/Information.rb'
 
 class GenerateTable
 
@@ -13,7 +13,7 @@ class GenerateTable
         for i in 0..(elements.length - 1)
             count = 0
             for j in 0..(array.length - 1)
-                if elements[i] == array[j]
+                if elements[i].getCode() == array[j]
                      count += 1                   
                 end
             end
@@ -29,12 +29,7 @@ class GenerateTable
         table = Array.new()
     
         for i in 0..(elements.length - 1)
-                     
-            temp = Array.new()
-            temp.push(elements[i])
-            temp.push(values[i])
-            table.push(temp)
-            
+            elements[i].setTimes(values[i]) 
         end
         
         return table

@@ -1,3 +1,5 @@
+require_relative 'struct/Node.rb'
+load './struct/Information.rb'
 load 'Compare.rb'
 load 'GenerateTable.rb'
 load 'SortChars.rb'

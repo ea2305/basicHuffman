@@ -1,4 +1,6 @@
 ##Ordenamiento de tabla de frecuencias
+#Cabiar por nodos
+load './struct/Information.rb'
 
 class SortChars
     
@@ -7,7 +9,7 @@ class SortChars
         
         for i in 0..(size - 1)
             for j in 0..(size - 2)
-                if (elements[j][1] > elements[(j + 1)][1])
+                if (elements[j].getTimes() > elements[(j + 1)].getTimes())
                 
                     temp = elements[j + 1]#asignacion de
                     elements[(j + 1)] = elements[j]
