@@ -1,7 +1,6 @@
 #Generador de elementos existentes, 
 #Obtiene todos los caracteres existentes dentro del array 
-load './struct/Information.rb'
-load './struct/Node.rb'
+
 
 class Compare
 

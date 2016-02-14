@@ -25,7 +25,7 @@ class Node
     end
     
     def getRight()
-        return @left
+        return @right
     end
 
     def setData(data)

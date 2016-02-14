@@ -1,6 +1,5 @@
 ##Ordenamiento de tabla de frecuencias
 #Cabiar por nodos
-load './struct/Information.rb'
 
 class SortChars
     
@@ -10,7 +9,6 @@ class SortChars
         for i in 0..(size - 1)
             for j in 0..(size - 2)
                 if (elements[j].getTimes() > elements[(j + 1)].getTimes())
-                
                     temp = elements[j + 1]#asignacion de
                     elements[(j + 1)] = elements[j]
                     elements[j] = temp 
@@ -20,9 +18,10 @@ class SortChars
         return elements
     end
 
-    def printArray(array)
+    #Impresion de objeto Information
+    def printInformation(array)
         for i in 0..array.length - 1
-            puts ("#{array[i]}")
+            puts (":: #{array[i].getCode()} :: #{array[i].getTimes()}")
         end
     end
 

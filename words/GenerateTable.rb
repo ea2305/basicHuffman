@@ -1,10 +1,12 @@
-load './struct/Information.rb'
+##Genera un vecotr de objetos de tipo Information, con el numero de repeticiones y el caracter.
 
 class GenerateTable
 
     def initialize
     end
-
+    
+    ##Obtiene el numero de repeticiones del conjunto de datos por caracter
+    #Y carga los datos al objeto Information del array
     def get_Table(value, elements)
         #arr_data = values.clone #recivimos el arreglo de elementos y copiamos
         countArray = Array.new()
@@ -17,21 +19,8 @@ class GenerateTable
                      count += 1                   
                 end
             end
-            
-            countArray.push(count) 
-                        
+            elements[i].setTimes(count)##Cargamos los datos al objeto Inormation                        
         end
-        return allComponents(elements,countArray)
-    end
-    
-    def allComponents(elements,values)
-        
-        table = Array.new()
-    
-        for i in 0..(elements.length - 1)
-            elements[i].setTimes(values[i]) 
-        end
-        
-        return table
+        return elements
     end
 end
