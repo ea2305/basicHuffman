@@ -3,6 +3,10 @@ class Tree
     
     @root = Node.new()
     
+    def initialize(root = nil)
+        @root = root
+    end
+    
     #Inicializa el valor de la raiz
     def setRoot(root = nil)
         @root = root
@@ -24,45 +28,49 @@ class Tree
     *In Order : Obtiene ele elemento de izquierda, central y derecha
     *Pos Order : Obtiene el elemento de izquierda, derecha y central
 =end   
-    def preOrder(node)
+    #*Pre Orider : obtiene el elemento central, izquierda y derecha
+    def preOrder(node,myLambda)
         if node != nil
-            puts(node.getData())
-            preOrder(node.getLeft)
-            preOrder(node.getRight)
+            puts(myLambda.call(node))
+            preOrder(node.getLeft,myLambda)
+            preOrder(node.getRight,myLambda)
         end
     end
     
-    def start_preOrder()
+    def start_preOrder(myLambda)
         if @root != nil
-            preOrder(@root)
+            preOrder(@root,myLambda)
         end
     end
     
-    def posOrder(node)
+    
+    ##*In Order : Obtiene ele elemento de izquierda, central y derecha
+    def posOrder(node,myLambda)
         if node != nil
-            preOrder(node.getLeft)
-            preOrder(node.getRight)
-            puts(node.getData())
+            posOrder(node.getLeft,myLambda)
+            posOrder(node.getRight,myLambda)
+            puts(myLambda.call(node))
         end
     end
     
-    def start_posOrder()
+    def start_posOrder(myLambda)
         if @root != nil
-            posOrder(@root)
+            posOrder(@root,myLambda)
         end
     end 
-
-    def inOrder(node)
+    
+    #*Pos Order : Obtiene el elemento de izquierda, derecha y central
+    def inOrder(node,myLambda)
         if node != nil
-            preOrder(node.getLeft)
-            puts(node.getData())
-            preOrder(node.getRight)
+            inOrder(node.getLeft,myLambda)
+            puts(myLambda.call(node))
+            inOrder(node.getRight,myLambda)
         end
     end
     
-    def start_inOrder()
+    def start_inOrder(myLambda)
         if @root != nil
-            inOrder(@root)
+            inOrder(@root,myLambda)
         end
     end
     

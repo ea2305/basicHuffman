@@ -4,12 +4,13 @@ load './struct/Information.rb'
 load './words/Compare.rb'
 load './words/GenerateTable.rb'
 load './words/SortChars.rb'
+load './huffman/GenerateCode.rb'
 
 gen = GenerateTable.new  #generamos la instancia del objeto
 comp = Compare.new
 sort = SortChars.new
 
-test = "elihu alejandro cruz albores"
+test = "aeiaeia"
 
 elements = comp.allChars(test)
 
@@ -27,26 +28,12 @@ derecha = Node.new("DERECHA")
 centro = Node.new("CENTRO",izquierda,derecha)
 =end
 
-myTree = Tree.new
-myTree.addInTree(10)
+puts"======>"
 
-myTree.addInTree(11)
-myTree.addInTree(12)
-myTree.addInTree(13)
+code_gen = GenerateCode.new
 
-myTree.addInTree(9)
-myTree.addInTree(8)
-myTree.addInTree(7)
+arbol_code = Tree.new(code_gen.makeTree(ordTable))##Obtenemos el nodo raiz para el arbol
 
-#myTree.setRoot(centro)
+myLambda = lambda {|node| node.getData().getCode()} # Creamos el metodo de impresion del arbol
 
-=begin
-puts "Recorridos ::>"
-puts "preOrder"
-myTree.start_preOrder();
-puts ":: inOrder"
-
-puts ":: posOrder"
-myTree.start_posOrder();
-=end
-myTree.start_preOrder();
+arbol_code.start_inOrder(myLambda) ##Imprimimos los datos por in order
