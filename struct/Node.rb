@@ -1,3 +1,5 @@
+#author : Elihu Alejandro Cruz Albores
+#version 1.0.3
 #Nodo basico para almacenamiento de informacion
 
 class Node

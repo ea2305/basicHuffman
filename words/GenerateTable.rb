@@ -1,3 +1,5 @@
+#author : Elihu Alejandro Cruz Albores
+#version 1.0.2
 ##Genera un vecotr de objetos de tipo Information, con el numero de repeticiones y el caracter.
 
 class GenerateTable

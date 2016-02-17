@@ -1,3 +1,5 @@
+#author : Elihu Alejandro Cruz Albores
+#version 1.0.2
 #Generador de elementos existentes, 
 #Obtiene todos los caracteres existentes dentro del array 
 

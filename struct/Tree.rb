@@ -1,7 +1,7 @@
+#author : Elihu Alejandro Cruz Albores
+#version 1.0.4
 #Estructura basica de un arbol binario
 class Tree
-    
-    @root = Node.new()
     
     def initialize(root = nil)
         @root = root
@@ -22,6 +22,7 @@ class Tree
         return nodeCurrent.setRight(nodeRight)
     end
     
+    
 =begin
     Recorridos de arbol binario
     *Pre Orider : obtiene el elemento central, izquierda y derecha
@@ -31,7 +32,7 @@ class Tree
     #*Pre Orider : obtiene el elemento central, izquierda y derecha
     def preOrder(node,myLambda)
         if node != nil
-            puts(myLambda.call(node))
+            myLambda.call(node)
             preOrder(node.getLeft,myLambda)
             preOrder(node.getRight,myLambda)
         end
@@ -49,7 +50,7 @@ class Tree
         if node != nil
             posOrder(node.getLeft,myLambda)
             posOrder(node.getRight,myLambda)
-            puts(myLambda.call(node))
+            myLambda.call(node)
         end
     end
     
@@ -63,7 +64,7 @@ class Tree
     def inOrder(node,myLambda)
         if node != nil
             inOrder(node.getLeft,myLambda)
-            puts(myLambda.call(node))
+            myLambda.call(node)
             inOrder(node.getRight,myLambda)
         end
     end
@@ -71,6 +72,46 @@ class Tree
     def start_inOrder(myLambda)
         if @root != nil
             inOrder(@root,myLambda)
+        end
+    end
+    
+    # Function to  print level order traversal of tree
+    def levelOrder(myLambda)
+        h = height(@root)
+        for i in 1..(h+1) 
+            printGivenLevel(@root, i,myLambda)
+        end
+    end   
+    
+    # Print nodes at a given level
+    def printGivenLevel(root , level, myLambda)
+        if root == nil
+            return
+        end    
+        if level == 1
+            myLambda.call(root)
+        else
+            if level > 1 
+                printGivenLevel(root.getLeft() , level-1, myLambda)
+                printGivenLevel(root.getRight() , level-1, myLambda)
+            end
+        end
+    end
+    
+    def height(node)
+        if node == nil
+            return 0
+        else 
+            # Compute the height of each subtree 
+            lheight = height(node.getLeft())
+            rheight = height(node.getRight())
+    
+            #Use the larger one
+            if lheight > rheight
+                return lheight+1
+            else
+                return rheight+1
+            end
         end
     end
     
@@ -102,5 +143,38 @@ class Tree
                 addInNode(value, node.getLeft())
             end
         end 
+    end
+    
+    #Busqueda de nodo por contendido, retrona las posiciones
+    def searchCode(node,search,stack,myLambda)
+        if node == nil
+            stack.pop()
+            return false
+        else    
+            if search == myLambda.call(node)
+                return true
+            else
+                stack.push(0)
+                if searchCode(node.getLeft(),search,stack,myLambda) == true
+                    return true
+                else    
+                    stack.push(1)
+                    if searchCode(node.getRight(),search,stack,myLambda) == true
+                        return true 
+                    end
+                end
+                stack.pop() ##Si el elemento se encuentra en alguna otra rama
+            end
+        end
+        
+    end
+    
+    def start_searchCode(search,myLambda)
+        if search == nil
+            return -1
+        else
+            myStack = Array.new ##Almacenador del codigo para el arbol
+            return (searchCode(@root,search,myStack,myLambda))? myStack : -1
+        end
     end
 end

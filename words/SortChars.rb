@@ -1,21 +1,22 @@
+#author : Elihu Alejandro Cruz Albores
+#version 1.0.3
 ##Ordenamiento de tabla de frecuencias
 #Cabiar por nodos
 
 class SortChars
     
-    def shortElements(elements)#ordena tabla de elementos
-        size = elements.length
-        
-        for i in 0..(size - 1)
-            for j in 0..(size - 2)
-                if (elements[j].getTimes() > elements[(j + 1)].getTimes())
-                    temp = elements[j + 1]#asignacion de
-                    elements[(j + 1)] = elements[j]
-                    elements[j] = temp 
-                end 
-            end    
+    def shortElements(array)#ordena tabla de elementos
+        loop do
+            swapped = false
+            (array.size - 1).times do |i|
+            if array[i].getTimes() > array[i+1].getTimes()
+                array[i], array[i+1] = array[i+1], array[i]
+                swapped = true
+            end
+            end
+            break unless swapped
         end
-        return elements
+        array   
     end
 
     #Impresion de objeto Information
