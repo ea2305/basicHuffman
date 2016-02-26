@@ -1,16 +1,25 @@
 #author : Elihu Alejandro Cruz Albores
 #version 1.0.5
 #Estructura basica de un arbol binario
-class Tree
+class Tree < Node
+    #recorridos del arbol
 
-    def initialize(root = nil)
+    #Constructor por defecto
+    def initialize(root = nil,compare = lambda{|node| node.getData()})
         @root = root
+        @compare = compare
         @level = 0
+        @nodes = 0
+        startMethods()##Creamos objetos y establecemos conexion con arbol a clases
     end
 
-    #Inicializa el valor de la raiz
-    def setRoot(root = nil)
-        @root = root
+    #Inicializa las referencias al arbol
+    def startMethods()
+        @orderMethods = OrderTree.new(@root) ##Metodos de recorridos
+        @addMethods = AddTree.new(@root,@compare) ##Metodos de agregado
+        @searchMethods = SearchTree.new(@root,@compare) ## Metodos de busqueda en arbol
+        @removeMethods = RemoveTree.new(@root,@compare) ##Metodos para remover elementos
+        @drawMethods = DrawTree.new(@root,@compare)
     end
 
     #Asigna nodo en la posicion izquierda
@@ -23,6 +32,7 @@ class Tree
         return nodeCurrent.setRight(nodeRight)
     end
 
+#Altura del arbol
     def getLevel()
         tree_level(@root,0)
         return @level
@@ -38,174 +48,106 @@ class Tree
             tree_level(node.getRight(), count +=1)
         end
     end
-=begin
-    Recorridos de arbol binario
-    *Pre Orider : obtiene el elemento central, izquierda y derecha
-    *In Order : Obtiene ele elemento de izquierda, central y derecha
-    *Pos Order : Obtiene el elemento de izquierda, derecha y central
-=end
-    #*Pre Orider : obtiene el elemento central, izquierda y derecha
-    def preOrder(node,myLambda)
-        if node != nil
-            myLambda.call(node)
-            preOrder(node.getLeft,myLambda)
-            preOrder(node.getRight,myLambda)
-        end
+
+    def getNodes()
+        tree_nodes(@root,0)
+        return @nodes + 1
     end
 
-    def start_preOrder(myLambda)
-        if @root != nil
-            preOrder(@root,myLambda)
-        end
-    end
-
-
-    ##*In Order : Obtiene ele elemento de izquierda, central y derecha
-    def posOrder(node,myLambda)
-        if node != nil
-            posOrder(node.getLeft,myLambda)
-            posOrder(node.getRight,myLambda)
-            myLambda.call(node)
-        end
-    end
-
-    def start_posOrder(myLambda)
-        if @root != nil
-            posOrder(@root,myLambda)
-        end
-    end
-
-    #*Pos Order : Obtiene el elemento de izquierda, derecha y central
-    def inOrder(node,myLambda)
-        if node != nil
-            inOrder(node.getLeft,myLambda)
-            myLambda.call(node)
-            inOrder(node.getRight,myLambda)
-        end
-    end
-
-    def start_inOrder(myLambda)
-        if @root != nil
-            inOrder(@root,myLambda)
-        end
-    end
-
-    # Function to  print level order traversal of tree
-    def levelOrder(myLambda)
-        h = height(@root)
-        for i in 1..(h+1)
-            printGivenLevel(@root, i,myLambda)
-        end
-    end
-
-    # Print nodes at a given level
-    def printGivenLevel(root , level, myLambda)
-        if root == nil
-            return
-        end
-        if level == 1
-            myLambda.call(root)
-        else
-            if level > 1
-                printGivenLevel(root.getLeft() , level-1, myLambda)
-                printGivenLevel(root.getRight() , level-1, myLambda)
-            end
-        end
-    end
-
-    def height(node)
+    def tree_nodes(node,count)
         if node == nil
-            return 0
+            count -= 1
         else
-            # Compute the height of each subtree
-            lheight = height(node.getLeft())
-            rheight = height(node.getRight())
-
-            #Use the larger one
-            if lheight > rheight
-                return lheight+1
-            else
-                return rheight+1
-            end
+            @nodes = count
+            tree_nodes(node.getLeft(), count += 1)
+            tree_nodes(node.getRight(), count +=1)
         end
     end
 
-=begin
-    Fin de recorridos de alrbol
-=end
+    def getRoot()
+        return @root;
+    end
+#Fin de altura del arbol
 
-    #Agregar al arbol completo
-    def addInTree(value)
+#Recorridos de arbol
+    def preOrder(instruction)
+        @orderMethods.preOrder(instruction)
+    end
+
+    def inOrder(instruction)
+        @orderMethods.inOrder(instruction)
+    end
+
+    def posOrder(instruction)
+        @orderMethods.posOrder(instruction)
+    end
+
+    def levelOrder(instruction)
+        @orderMethods.levelOrder(instruction)
+    end
+#Fin de recorridos del arbol
+
+#Agregar al arbol completo
+#Metodo de insercion por comparacion de nodo
+#Recivimos el valor a agregar, con la funcion lambda para evaluar al elemento
+
+    def add(value)
         if @root == nil
-            setRoot(Node.new(value))
+            @root = Node.new(value)
+            startMethods()
         else
-            addInNode(value, @root)
+            @addMethods.add(value)
         end
+        puts "* DATO INSERTADO CORRECTAMENTE !"
+
     end
 
-    #Agregar al nodo por gerarqui da valor
     def addInNode(value,node)
-        if value > node.getData()
-            if node.getRight() == nil
-                node.setRight(Node.new(value))
-            else
-                addInNode(value, node.getRight())
-            end
-        else
-            if node.getLeft() == nil
-                node.setLeft(Node.new(value))
-            else
-                addInNode(value, node.getLeft())
-            end
-        end
+        @addMethods.addInNode(value,node)
+    end
+#Fin de metodos de agregar al arbol
+
+##Inicia metodo de busqueda en el arbol
+
+    def search(value)
+        return @searchMethods.searchAtTree(value, @root)
     end
 
-    #Busqueda de nodo por contendido, retrona las posiciones
-    def searchCode(node,search,stack,myLambda)
-        if node == nil
-            stack.pop()
-            return false
-        else
-            if search == myLambda.call(node)
+    ##Busca elmento en todo el arbol y retorna la ruta del nodo en caso de existir
+    # Recive el valor a buscar
+    #Un lambda para manejo del contenido del nodo y sub clases
+    def searchCode(search,instruction)
+        @searchMethods.searchCode(search,instruction)
+    end
+
+#Remover nodos del arbol
+
+    ##Elimina un nodo del arbol binario
+    def delete(value)
+        if search(value)
+            if value == @root.getData()#Descartamos la eliminacion de la raiz
+                if @root.getLeft() == nil and @root.getRight() == nil#verificamos el caso
+                    @root = nil
+                else
+                    temp_root = Node.new(-100000) #Asignamos nodo temporal
+                    @removeMethods.promote(@root,temp_root) #encontramos el mejor elemento
+                    @root = temp_root.getRight() #Asignamos nuevo nodo con remplazo ideal
+                end
+                startMethods() ##enviamos actualizacion de nodo
                 return true
             else
-                stack.push(0)
-                if searchCode(node.getLeft(),search,stack,myLambda) == true
-                    return true
-                else
-                    stack.push(1)
-                    if searchCode(node.getRight(),search,stack,myLambda) == true
-                        return true
-                    end
-                end
-                stack.pop() ##Si el elemento se encuentra en alguna otra rama
+                return @removeMethods.delete(value)
             end
-        end
-
-    end
-
-    def start_searchCode(search,myLambda)
-        if search == nil
-            return -1
         else
-            myStack = Array.new ##Almacenador del codigo para el arbol
-            return (searchCode(@root,search,myStack,myLambda))? myStack : -1
+            return false
         end
     end
 
-    def printTree()
-        print_node(@root)
-    end
-
-    def print_node(node)
-        if node != nil
-            return nil
-        end
-
-        for i in 0..@level do
-            drawLevel(@root, i, @level)
-        end
-    end
-
-    def drawLevel()
+   def draw()
+       if @root != nil
+           @drawMethods.draw(getLevel())
+       else
+           puts "* LA RAIZ ESTA VACIA !"
+       end
+   end
 end
