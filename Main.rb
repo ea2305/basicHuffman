@@ -9,16 +9,20 @@ load './struct/components/RemoveTree.rb'
 load './struct/components/SearchTree.rb'
 load './struct/Tree.rb'
 load './struct/Information.rb'
+
 load './words/Compare.rb'
 load './words/GenerateTable.rb'
 load './words/SortChars.rb'
+
 load './huffman/GenerateCode.rb'
+load './huffman/GetCode.rb'
 
 gen = GenerateTable.new  #generamos la instancia del objeto
+code_gen = GenerateCode.new
 comp = Compare.new
 sort = SortChars.new
 
-#test = "aeiaeia"
+#test = "gato"
 test = "elihu alejandro cruz albores"
 elements = comp.allChars(test)
 
@@ -30,15 +34,7 @@ puts("Otros nuevos ele : #{ordTable}")
 
 sort.printInformation(ordTable)
 
-=begin
-izquierda = Node.new("IZQUIERDA")
-derecha = Node.new("DERECHA")
-centro = Node.new("CENTRO",izquierda,derecha)
-=end
-
 puts"======>"
-
-code_gen = GenerateCode.new
 
 myLambda = lambda {|node| puts ">> : #{node.getData().getCode()}" } # Creamos el metodo de impresion del arbol
 
@@ -60,4 +56,13 @@ end
 
 puts "--------"
 
-puts code_gen.getCode(arbol_code)
+
+mensaje = code_gen.getCode(arbol_code,"el aula leon")
+
+decod = GetCode.new
+
+texto = decod.getText(mensaje)
+
+puts "-" * 80
+
+puts "#{texto}"

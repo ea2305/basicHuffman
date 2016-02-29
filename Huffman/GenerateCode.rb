@@ -6,6 +6,7 @@
 class GenerateCode
 
     def initialize
+        @divisor_Tree = ["1","1","0","0","0","0","0","1"]
     end
 
     #Genera un arbol con los datos del vector
@@ -85,18 +86,40 @@ class GenerateCode
     end
 
     #generamos albol codificado
-    def getCode(tree)
-        if(tree == nil)
-            return nil
+    #recive el arbol con los datos, el mensaje, la tabla de transformacion
+    def getCode(tree,text)
+        if tree != nil
+            #Generamos la variable para el codigo del arbol
+            codeTree = Array.new
+
+            ##Codificamos el arbol de huffman
+            method_getCode(tree.getRoot(),codeTree)
+
+            ##insertamos el codigo
+            @divisor_Tree.each do |x|
+                codeTree.push(x)
+            end
+
+            ##Insertamos el mensaje del arbol
+            insertText(codeTree,text,tree)
+
+            puts "#{codeTree}"
+            return codeTree
         end
+    end
 
-        #Generamos la variable para el codigo del arbol
-        codeTree = Array.new
+    def insertText(code,text,tree)
+        if tree != nil
 
-        method_getCode(tree.getRoot(),codeTree)
+            method_search = lambda do |node| node.getData().getCode() end ##Creamos lambda
+            chars = text.split("")
 
-        puts "#{codeTree}"
-        return codeTree
+            chars.each do |x|
+                tree.searchCode(x,method_search).each do |y|
+                    code.push(y.to_s)
+                end
+            end
+        end
     end
 
     def method_getCode(node,code)
@@ -107,26 +130,15 @@ class GenerateCode
 
         if isLeaf(node)
             code.push("1")
-            code.push(node.getData().getCode().unpack('B8'))
+            node.getData().getCode().unpack('B8')[0].split("").each() do |x|
+                code.push(x)
+            end
+
         else
             code.push("0")
             method_getCode(node.getLeft(),code)
             method_getCode(node.getRight(),code)
         end
-
-=begin
-        code.push("0")
-        if isLeaf(node)
-            code.push(node.getData().getCode().unpack('B8')[0])
-        end
-        method_getCode(node.getLeft(),code)
-
-        code.push("1")
-        if isLeaf(node)
-            code.push(node.getData().getCode().unpack('B8')[0])
-        end
-        method_getCode(node.getRight(),code)
-=end
     end
 
     def isLeaf(node)
