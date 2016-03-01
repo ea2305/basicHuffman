@@ -1,6 +1,7 @@
 #author : Elihu Alejandro Cruz Albores
 #version 1.0.7
 
+#Modulos necesarios
 load './struct/components/Node.rb'
 load './struct/components/AddTree.rb'
 load './struct/components/DrawTree.rb'
@@ -10,59 +11,55 @@ load './struct/components/SearchTree.rb'
 load './struct/Tree.rb'
 load './struct/Information.rb'
 
+#Clases para manejo de mensaje, repeticion
 load './words/Compare.rb'
 load './words/GenerateTable.rb'
 load './words/SortChars.rb'
 
+#Obtencion de arbol y codigo
 load './huffman/GenerateCode.rb'
 load './huffman/GetCode.rb'
+load './reader/Files.rb'
 
-gen = GenerateTable.new  #generamos la instancia del objeto
-code_gen = GenerateCode.new
-comp = Compare.new
-sort = SortChars.new
+#Menu principal
+load './views/MainView.rb'
+load './views/Menu.rb'
+load './models/Model.rb'
 
-#test = "gato"
-test = "elihu alejandro cruz albores"
-elements = comp.allChars(test)
+class Main
+    def initialize
+        @view = MainView.new("Arbol de Huffman",self)
+        @model = Model.new
+    end
 
-table = gen.get_Table(test,elements)
+    def callModel(call)
 
-ordTable = sort.shortElements(table)
-puts("Otros nuevos ele : #{ordTable}")
-#puts("Otros nuevos ele : #{table}")
+        case call.to_i
+        when 1
+            @model.readFileEnc()
+        when 2
+            @model.loadData()
+        when 3
+            @model.getFrec_Table()
+        when 4
+            @model.getHuffmanTree()
+        when 5
+            @model.getTransformTable()
+        when 6
+            @model.generateCode()
+        when 7
+            @model.readFileDec()
+        when 8
+            @model.getResult()
+        end
+    end
 
-sort.printInformation(ordTable)
-
-puts"======>"
-
-myLambda = lambda {|node| puts ">> : #{node.getData().getCode()}" } # Creamos el metodo de impresion del arbol
-
-arbol_code = Tree.new(code_gen.makeTree(ordTable),myLambda)##Obtenemos el nodo raiz para el arbol
-puts "\n---------------------->"
-
-
-arbol_code.preOrder(myLambda) ##Imprimimos los datos por in order
-#arbol_code.printLevelOrder(myLambda)
-
-puts " ----------------------- "
-
-#generamos la tabla de transformacion
-table_transform = code_gen.makeTable_Char(ordTable,arbol_code)
-(table_transform.size).times do |i|
-    puts "#{table_transform[i].getCode()} :: #{table_transform[i].getTimes()}"
+    def callView
+        #initialize menu
+        @view.start()
+    end
 end
 
-
-puts "--------"
-
-
-mensaje = code_gen.getCode(arbol_code,"el aula leon")
-
-decod = GetCode.new
-
-texto = decod.getText(mensaje)
-
-puts "-" * 80
-
-puts "#{texto}"
+#Start
+init = Main.new
+init.callView

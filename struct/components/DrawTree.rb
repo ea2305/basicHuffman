@@ -53,7 +53,12 @@ class DrawTree
         for j in 0..(( 2**i ) - 1)
             element = stack[j].to_s.length
             printSpace(baseWidth - element) #imprimimos la separacion del nodo
-            print stack[j] #Impresion del contenido del nodo
+            if stack[j] != "X"
+                print stack[j].getCode() #Impresion del contenido del nodo
+            else
+                print stack[j] #Impresion del contenido del nodo
+            end
+
             printSpace(baseWidth) #Impresion de separacion de nodo a nodo
         end
     end

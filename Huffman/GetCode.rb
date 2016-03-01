@@ -16,10 +16,12 @@ class GetCode
         puts "*"*100
         tree_huffman.preOrder(compare)
         puts "*"*100
+
+        tree_huffman.draw()
         #Obtencion de codigo
 
         new_code = @code[8..@code.size]
-        puts "cadena :: #{new_code}"
+#        puts "cadena :: #{new_code}"
         #Generamos el mensaje recivido
         msg = convertCode(new_code,tree_huffman.getRoot())
 
@@ -31,7 +33,7 @@ class GetCode
         response = Array.new()
 
         while(code.size != 0) do
-            puts "::->>>#{code}"
+#            puts "::->>>#{code}"
 
             current = node.clone
             moves = 0
@@ -48,7 +50,7 @@ class GetCode
 
             code = code[moves..code.size]
             response.push(current.getData().getCode())
-            puts "\n #{response}"
+#            puts "\n #{response}"
         end
         return response
     end
