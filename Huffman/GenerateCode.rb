@@ -113,7 +113,7 @@ class GenerateCode
 
             method_search = lambda do |node| node.getData().getCode() end ##Creamos lambda
             chars = text.split("")
-
+puts chars
             chars.each do |x|
                 tree.searchCode(x,method_search).each do |y|
                     code.push(y.to_s)

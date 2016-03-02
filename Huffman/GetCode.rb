@@ -17,7 +17,6 @@ class GetCode
         tree_huffman.preOrder(compare)
         puts "*"*100
 
-        tree_huffman.draw()
         #Obtencion de codigo
 
         new_code = @code[8..@code.size]
@@ -58,7 +57,7 @@ class GetCode
     #Genera el arbol de huffman
     def createTree(height)
 
-        puts "\n\n#{@code}\n\n"
+        #puts "\n\n#{@code}\n\n"
         current_node = nil
 
         if @code[0] == "0"

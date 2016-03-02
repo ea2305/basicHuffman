@@ -109,11 +109,14 @@ class Model
     end
 
     def getResult
-        codeToDecode = @codeToDecode.split("")
-        codeToDecode.delete("\n")
-        texto = @decod.getText(codeToDecode)
-        puts texto.join
-
+        if @codeToDecode != ""
+            codeToDecode = @codeToDecode.split("")
+            codeToDecode.delete("\n")
+            texto = @decod.getText(codeToDecode)
+            puts texto.join
+        else
+            puts "* No se ha cargado un Archivo para decodificar"
+        end
     end
 
     def getText(msg = "Introduzca texto")
